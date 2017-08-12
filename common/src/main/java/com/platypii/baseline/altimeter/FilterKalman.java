@@ -12,8 +12,8 @@ public class FilterKalman extends Filter {
     // TODO: Determine sensor variance from model error
 
     // Kalman filter to update altitude and climb
-    private static final double sensorVariance = 600; // measurement variance ("r" in typical kalman notation)
-    private static final double accelerationVariance = 8; // acceleration variance
+    private final double sensorVariance; // measurement variance ("r" in typical kalman notation)
+    private final double accelerationVariance; // acceleration variance
 
     private double p11 = 1;
     private double p12 = 0;
@@ -21,6 +21,14 @@ public class FilterKalman extends Filter {
     private double p22 = 1;
 
     private boolean initialized = false;
+
+    public FilterKalman() {
+        this(600, 8); // Defaults
+    }
+    public FilterKalman(double sensorVariance, double accelerationVariance) {
+        this.sensorVariance = sensorVariance;
+        this.accelerationVariance = accelerationVariance;
+    }
 
     @Override
     public void init(double z, double v) {
